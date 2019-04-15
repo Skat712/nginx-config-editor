@@ -5,7 +5,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-
+    path:'/etc/nginx/sites-available'
   },
   mutations: {
 
