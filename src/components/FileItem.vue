@@ -1,32 +1,33 @@
 <template>
     <div class="file-item">
-        <router-link :to="{ name: 'edit', params: { file: this.file}}">
-
-
-           <b-row style="align-items: center">
-               <div>
-                   <img  src="../assets/Filetype-Docs-icon.png" style="max-width: 40px;">
+           <b-row>
+               <router-link :to="{ name: 'edit', params: { file: this.file}}">
+               <div style="display: flex">
+                   <div>
+                       <img  src="../assets/Filetype-Docs-icon.png" style="max-width: 40px;">
+                   </div>
+                   <div class="file-item">
+                       <p>{{this.file}}</p>
+                       <p>
+                           <span>Размер: {{this.size}}</span>
+                           <span>Создан: {{this.created}}</span>
+                           <span>Изменен: {{this.updated}}</span>
+                       </p>
+                   </div>
                </div>
-               <div class="file-item">
-                   <p>{{this.file}}</p>
-                   <p>
-                       <span>Размер: {{this.size}}</span>
-                       <span>Создан: {{this.created}}</span>
-                       <span>Изменен: {{this.updated}}</span>
-                   </p>
-               </div>
+               </router-link>
                <div>
-                   <p>fsf</p>
+                   <b-button variant="danger" size="sm" @click="this.deleteFile">Удалить</b-button>
                </div>
            </b-row>
 
-        </router-link>
     </div>
 </template>
 
 <script>
-    import  fs from 'fs';
-    import  path from 'path';
+    import fs from 'fs';
+    import path from 'path';
+    const { dialog } = require('electron').remote;
 
     export default {
         name: "FileItem",
@@ -37,6 +38,7 @@
               size:0,
               created:0,
               updated:0,
+              filePath:path.join(this.$store.state.path,this.file)
             }
         },
 
@@ -45,11 +47,14 @@
         },
 
         methods:{
+            /**
+             * Получает информацию о файле(размер,дату создания и тд.)
+             */
             getFileInfo:function () {
-                fs.stat(path.join(this.$store.state.path,this.file), (err, stats) => {
+                fs.stat(this.filePath, (err, stats) => {
                     if (err) {
-                        console.error(err)
-                        return
+                        alert(err);
+                        return false
                     }
 
                     this.size = this.formatBytes(stats['size']);
@@ -58,6 +63,27 @@
                 })
             },
 
+            /**
+             * Удаляет файл
+             */
+            deleteFile:function(){
+                let response = dialog.showMessageBox({
+                    buttons: ["Да","Отмена"],
+                    message: `Удалить файл ${this.file} ?`
+                });
+
+                if (response === 0){
+                    fs.unlinkSync(this.filePath);
+                    this.$store.commit('removeFile',this.file);
+                }
+            },
+
+            /**
+             * Форматирует размер файла
+             * @param bytes
+             * @param decimals
+             * @returns {string}
+             */
             formatBytes: (bytes, decimals = 2) =>{
                 if (bytes === 0) return '0 Bytes';
 
@@ -89,5 +115,14 @@
 
   .file-item a{
       text-decoration: none;
+  }
+
+  button{
+      margin-right: 10px;
+  }
+
+  .row{
+      align-items: center;
+      justify-content: space-between;
   }
 </style>

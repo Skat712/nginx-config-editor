@@ -26,7 +26,7 @@
 
     data:function(){
       return {
-        fileContent:'fsfs',
+        fileContent:'',
         filePath: path.join(this.$store.state.path,this.$route.params.file)
       }
     },
@@ -36,21 +36,26 @@
     },
 
     methods:{
+      /**
+       *Получает содержмое файла
+       */
       getFile: function() {
         this.fileContent = fs.readFileSync(this.filePath, 'utf8');
       },
 
+      /**
+       * Сохраняет файл
+       */
       saveFile(){
         fs.writeFile(this.filePath,this.fileContent, 'utf8', (err)=>{
           if(err){
-            console.log(err);
+            alert(err);
+            return false;
           }
 
+          alert('Файл сохранен!');
         });
       },
-
-
-
     }
   }
 </script>

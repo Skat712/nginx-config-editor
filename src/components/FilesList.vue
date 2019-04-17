@@ -1,53 +1,49 @@
 <template>
   <div>
     <b-list-group>
-      <b-list-group-item v-for="item in items">
-          <FileItem :file="item"/>
+      <b-list-group-item v-for="file in this.$store.state.files">
+          <FileItem :file="file"/>
       </b-list-group-item>
     </b-list-group>
   </div>
 </template>
 
 <script>
-import {ListGroup} from 'bootstrap-vue/es/components/list-group';
 import FileItem from '@/components/FileItem.vue';
 import fs from 'fs';
 
 export default {
-  name: 'HelloWorld',
-    components: {FileItem},
+  name: 'FilesList',
+  components: {FileItem},
 
-  data:function () {
-    return {
-      items: [],
-      name:''
+  mounted() {
+    if(this.$store.state.files.length == 0){
+      this.getFiles();
     }
   },
 
-    mounted() {
-        this.getFiles();
-    },
-
   methods:{
+    /**
+     * Получает все файлы
+     */
     getFiles:function () {
         fs.readdir(this.$store.state.path, (err, files) => {
+
+          if(err){
+            alert(err);
+            return false;
+          }
+
           files.forEach(file => {
-            this.items.push(file);
+            this.$store.commit('addFile',file);
           });
         });
     },
-
-    createFile:function(bvModalEvt) {
-        if(this.name === ''){
-            bvModalEvt.preventDefault();
-        }
-    }
   }
 
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 h3 {
   margin: 40px 0 0;

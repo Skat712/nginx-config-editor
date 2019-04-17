@@ -2,18 +2,10 @@
   <div class="home">
     <p>
       <b-container fluid>
-          <b-row style="align-items: center">
-            <b-button v-b-modal.my-modal>Создать</b-button>
+          <b-row>
+            <h5>Обнаружено {{this.$store.state.files.length}} файлов конфигурации</h5>
+            <CreateFileBtn/>
           </b-row>
-
-        <b-modal id="my-modal" @ok="this.createFile"
-                 title="Создать файл конфигурации"
-                 ok-title = "Создать"
-                 cancel-title = "Отмена"
-        >
-          <b-form-input v-model="name" placeholder="Введите имя файла"></b-form-input>
-        </b-modal>
-
       </b-container>
     </p>
 
@@ -24,11 +16,25 @@
 <script>
 // @ is an alias to /src
 import FilesList from '@/components/FilesList.vue'
+import CreateFileBtn from "../components/CreateFileBtn";
 
 export default {
   name: 'home',
   components: {
+    CreateFileBtn,
     FilesList
   },
 }
 </script>
+
+<style scoped>
+  .row{
+    align-items: center;
+  }
+
+  h5{
+    padding-left: 10px;
+    margin: 0px;
+  }
+
+</style>
