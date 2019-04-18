@@ -22,7 +22,7 @@
             return{
                 fileName:'',
                 filePath:this.$store.state.path+'/',
-                error:''
+                error:'',
             }
         },
 
@@ -54,7 +54,7 @@
                 fs.writeFile(this.getFilePath,'', 'utf8', (err)=>{
                     if(err){
                         alert(err);
-                        return false
+                        return false;
                     }
 
                     this.$store.commit('addFile',this.fileName);

@@ -1,7 +1,7 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import Vue from 'vue';
+import Vuex from 'vuex';
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
@@ -9,7 +9,7 @@ export default new Vuex.Store({
      * Путь к папке с конфиг файлами
      */
     path: '/etc/nginx/sites-available',
-    files:[]
+    files:[],
   },
   mutations: {
     /**

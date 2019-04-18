@@ -18,7 +18,7 @@ export default {
 
   mounted() {
     if(this.$store.state.files.length == 0){
-      this.getFiles();
+      //this.getFiles();
     }
   },
 

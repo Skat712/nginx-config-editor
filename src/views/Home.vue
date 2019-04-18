@@ -15,14 +15,14 @@
 
 <script>
 // @ is an alias to /src
-import FilesList from '@/components/FilesList.vue'
+import FilesList from '@/components/FilesList.vue';
 import CreateFileBtn from "../components/CreateFileBtn";
 
 export default {
   name: 'home',
   components: {
     CreateFileBtn,
-    FilesList
+    FilesList,
   },
 }
 </script>

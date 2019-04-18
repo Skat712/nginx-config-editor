@@ -38,7 +38,7 @@
               size:0,
               created:0,
               updated:0,
-              filePath:path.join(this.$store.state.path,this.file)
+              filePath:path.join(this.$store.state.path,this.file),
             }
         },
 
@@ -54,7 +54,7 @@
                 fs.stat(this.filePath, (err, stats) => {
                     if (err) {
                         alert(err);
-                        return false
+                        return false;
                     }
 
                     this.size = this.formatBytes(stats['size']);

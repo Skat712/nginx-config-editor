@@ -27,7 +27,7 @@
     data:function(){
       return {
         fileContent:'',
-        filePath: path.join(this.$store.state.path,this.$route.params.file)
+        filePath: path.join(this.$store.state.path,this.$route.params.file),
       }
     },
 
