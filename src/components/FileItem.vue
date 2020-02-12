@@ -43,6 +43,7 @@
         },
 
         created(){
+             //kek
             this.getFileInfo();
         },
 
