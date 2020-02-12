@@ -73,6 +73,7 @@
                     message: `Удалить файл ${this.file} ?`
                 });
 
+                 //lol wtf
                 if (response === 0){
                     fs.unlinkSync(this.filePath);
                     this.$store.commit('removeFile',this.file);
